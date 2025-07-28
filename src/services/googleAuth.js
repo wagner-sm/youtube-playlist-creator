@@ -1,5 +1,4 @@
 // Serviço de autenticação com Google - Google Identity Services (GIS)
-let gapi = null;
 let tokenClient = null;
 let accessToken = null;
 let isInitialized = false;
@@ -88,8 +87,8 @@ export const initializeGoogleAuth = async () => {
       try {
         debugLog('Inicializando GAPI Client...');
 
-        await new Promise((resolve, reject) => {
-          window.gapi.load('client', resolve);
+        await new Promise((gapiResolve) => {
+          window.gapi.load('client', gapiResolve);
         });
 
         await window.gapi.client.init({
@@ -97,7 +96,6 @@ export const initializeGoogleAuth = async () => {
           discoveryDocs: [DISCOVERY_DOC]
         });
 
-        gapi = window.gapi;
         debugLog('✅ GAPI Client inicializado');
 
         // Carregar Google Identity Services
